@@ -13,10 +13,10 @@ RUN cargo chef cook --release --recipe-path recipe.json
 
 COPY . .
 
-RUN cargo build --release --bin binary
+RUN cargo build --release --bin axum_api_backend
 
 FROM debian:bookworm-slim AS runtime
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /app/target/release/binary /usr/local/bin/binary
+COPY --from=builder /app/target/release/axum_api_backend /usr/local/bin/axum_api_backend
 
-CMD ["/usr/local/bin/binary"]
+CMD ["/usr/local/bin/axum_api_backend"]
